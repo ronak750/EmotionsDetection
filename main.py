@@ -9,12 +9,21 @@ from keras.models import load_model
 import numpy as np
 
 #from utils.datasets import get_labels
-from utils.inference import detect_faces
-from utils.inference import draw_text
-from utils.inference import draw_bounding_box
-from utils.inference import apply_offsets
-from utils.inference import load_detection_model
+#from utils.inference import detect_faces
+#from inference import detect_faces
+#from utils.inference import draw_text
+#from utils.inference import draw_bounding_box
+#from utils.inference import apply_offsets
+#from utils.inference import load_detection_model
 #from utils.preprocessor import preprocess_input
+
+from inference import detect_faces
+from inference import draw_text
+from inference import draw_bounding_box
+from inference import apply_offsets
+from inference import load_detection_model
+
+
 
 def preprocess_input(x, v2=True):
     x = x.astype('float32')
