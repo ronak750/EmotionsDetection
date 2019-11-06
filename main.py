@@ -3,6 +3,8 @@
 
 
 from statistics import mode
+from playsound import playsound
+#import winsound
 
 import cv2
 from keras.models import load_model
@@ -55,10 +57,13 @@ emotion_target_size = emotion_classifier.input_shape[1:3]
 
 # starting lists for calculating modes
 emotion_window = []
-
+ans=0
+baseSound='Sounds/'
+#playsound('sample.mp3')
+prevIndex=-1;
 # starting video streaming
 cv2.namedWindow('window_frame')
-video_capture = cv2.VideoCapture('http://192.168.1.2:4747/mjpegfeed?640x480')
+video_capture = cv2.VideoCapture('http://192.168.1.3:4747/mjpegfeed?640x480')
 while True:
     bgr_image = video_capture.read()[1]
     gray_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2GRAY)
@@ -103,11 +108,25 @@ while True:
 
         color = color.astype(int)
         color = color.tolist()
-
+        
+        
         draw_bounding_box(face_coordinates, rgb_image, color)
         draw_text(face_coordinates, rgb_image, emotion_mode,
                   color, 0, -45, 1, 1)
-
+        #ans+=1%200
+        ans=(ans+1)%15
+#        if ans==200:
+#            ans=1      
+        if ans!=1:
+            break
+        if prevIndex==emotion_label_arg:
+            break
+        #prevIndex=emotion_label_arg   
+        prevIndex=emotion_label_arg
+        playsound(baseSound+emotion_text+'.mp3',False)
+        if 1:
+            break
+        
     bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
     cv2.imshow('window_frame', bgr_image)
     if cv2.waitKey(1) & 0xFF == ord('q'):
